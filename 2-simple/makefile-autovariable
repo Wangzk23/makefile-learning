@@ -1,0 +1,10 @@
+.PHONY : all
+
+all : first second third
+	@echo "\$$@ = $@"
+	@echo "$$^ = $^"
+	@echo "$$< = $<"
+
+# 试试如果把下面这行只有目标的规则删掉
+# 或者删掉其中的部分目标后，再运行make 会怎么样?
+first second third :

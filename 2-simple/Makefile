@@ -7,10 +7,10 @@ EXE = simple
 OBJS = main.o foo.o
 
 $(EXE) : ${OBJS}
-	$(CC) -o $(EXE) $(OBJS)
+	$(CC) -o $@ $^
 main.o : main.c
-	$(CC) -o main.o -c main.c
+	$(CC) -o $@ -c $^
 foo.o : foo.c
-	$(CC) -o foo.o -c foo.c
+	$(CC) -o $@ -c $^
 clean:
 	$(RM) $(EXE) $(OBJS)
