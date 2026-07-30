@@ -8,9 +8,14 @@ OBJS = main.o foo.o
 
 $(EXE) : ${OBJS}
 	$(CC) -o $@ $^
-main.o : main.c
+
+#main.o : main.c
+#	$(CC) -o $@ -c $^
+#foo.o : foo.c
+#	$(CC) -o $@ -c $^
+
+%.o : %.c
 	$(CC) -o $@ -c $^
-foo.o : foo.c
-	$(CC) -o $@ -c $^
+
 clean:
 	$(RM) $(EXE) $(OBJS)
