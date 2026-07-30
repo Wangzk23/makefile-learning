@@ -1,0 +1,15 @@
+.PHONY : all
+
+foo = $(bar)
+bar = $(ugh)
+ugh = Huh?
+
+all :
+	@echo $(foo)
+
+
+CFLAGS = $(include_dirs) -O
+include_dirs = -lfoo -lbar
+
+# 但是下面的递归赋值会出现死循环
+# CFLAGS = $(CFLAGS) -O
