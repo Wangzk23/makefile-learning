@@ -1,0 +1,9 @@
+.PHONY: all
+
+without_dir0 = foo.c bar.c main.o
+without_dir1 = fo.c ba.c mai.o
+with_dir := $(addprefix objs/, $(without_dir0), $(without_dir1))
+
+all:
+	@echo $(with_dir)
+

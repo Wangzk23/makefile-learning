@@ -1,0 +1,9 @@
+.PHONY: all
+
+objects = main.o main1.o foo.o foo.c main2.o bar.o
+
+result = $(filter-out main%.o foo.%, $(objects))
+
+all:
+	@echo $(result)
+
