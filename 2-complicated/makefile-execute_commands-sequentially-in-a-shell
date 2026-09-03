@@ -1,0 +1,9 @@
+.PHONY: all clean
+
+all:
+	@mkdir test ;\
+	cd test ;\
+	mkdir subtest
+
+clean:
+	@rm -rf test
