@@ -1,0 +1,4 @@
+objs/main.o deps/main.dep: main.c /home/afc/makefile-learning/3-huge/source/foo/inc/foo.h \
+ /home/afc/makefile-learning/3-huge/source/foo/inc/define.h \
+ /home/afc/makefile-learning/3-huge/source/foo/inc/other.h \
+ /home/afc/makefile-learning/3-huge/source/bar/inc/bar.h

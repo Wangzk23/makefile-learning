@@ -1,0 +1,3 @@
+objs/foo.o deps/foo.dep: foo.c /home/afc/makefile-learning/3-huge/source/foo/inc/foo.h \
+ /home/afc/makefile-learning/3-huge/source/foo/inc/define.h \
+ /home/afc/makefile-learning/3-huge/source/foo/inc/other.h

@@ -18,6 +18,12 @@ DEPS := $(addprefix $(DIR_DEPS)/, $(DEPS))
 EXE = complicated
 EXE := $(addprefix $(DIR_EXES)/, $(EXE))
 
+ifeq ($(wildcard $(DIR_DEPS)), )
+DEP_DIR_DEPS := $(DIR_DEPS)
+endif
+ifeq ($(wildcard $(DIR_OBJS)), )
+DEP_DIR_OBJS := $(DIR_OBJS)
+endif
 
 all: $(EXE)
 
@@ -31,21 +37,17 @@ $(DIRS):
 $(EXE): $(DIR_EXES) $(OBJS)
 	$(CC) -o $@ $(filter %.o, $^)
 
-$(DIR_OBJS)/%.o: %.c	# 这里用了模式
-	if [ ! -e $(DIR_OBJS) ]; then \
-		$(MKDIR) $(DIR_OBJS) ;\
-	fi ;\
+$(DIR_OBJS)/%.o: $(DEP_DIR_OBJS) %.c	# 这里用了模式
 	$(CC) -o $@ -c $(filter %.c, $^)
 
 # 下面主要利用 gcc -MM 选项列出 .c 源文件对其他文件的依赖关系
-$(DIR_DEPS)/%.dep: $(DIR_DEPS) %.c
+$(DIR_DEPS)/%.dep: $(DEP_DIR_DEPS) %.c
 	@echo "Making $@ ..."
 	@set -e;\
 	$(RM) $(RMFLAGS) $@.tmp ;\
 	$(CC) -E -MM $(filter %.c, $^) > $@.tmp ;\
 	sed 's,\(.*\)\.o[ :]*,objs/\1.o $@: ,g' <$@.tmp > $@ ;\
-	$(RM) $(RMFLAGS) $@.tmp ;\
-	touch $(DIR_DEPS)/*.dep
+	$(RM) $(RMFLAGS) $@.tmp
 
 
 clean:

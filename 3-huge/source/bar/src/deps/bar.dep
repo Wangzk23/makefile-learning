@@ -1,0 +1,1 @@
+objs/bar.o deps/bar.dep: bar.c /home/afc/makefile-learning/3-huge/source/bar/inc/bar.h
