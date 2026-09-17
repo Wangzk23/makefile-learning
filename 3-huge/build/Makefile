@@ -14,7 +14,7 @@ all clean:
 	@set -e; \
 	for dir in $(DIRS); \
 	do \
-		cd $$dir && $(MAKE) ROOT=$(ROOT) $@; \
+		cd $$dir && $(MAKE) -r ROOT=$(ROOT) $@; \
 	done
 	@set -e; \
 	if [ "$(MAKECMDGOALS)" = "clean" ]; then $(RM) $(RMFLAGS) $(RMS); fi
