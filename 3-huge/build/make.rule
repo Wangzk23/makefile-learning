@@ -40,9 +40,9 @@ endif
 ifeq ("$(wildcard $(DIR_DEPS))", "")
 DEP_DIR_DEPS := $(DIR_DEPS)
 endif
-#ifeq ("$(wildcard $(DIR_LIBS))", "")
-#DEP_DIR_LIBS := $(DIR_LIBS)
-#endif
+ifeq ("$(wildcard $(DIR_LIBS))", "")
+DEP_DIR_LIBS := $(DIR_LIBS)
+endif
 
 ifneq "$(EXE)" ''
 all: $(EXE)
@@ -63,16 +63,21 @@ endif
 
 ifneq ($LINK_LIBS), )
 LINK_LIBS := $(strip $(LINK_LIBS))
+LIB_ALL := $(notdir $(wildcard $(DIR_LIBS)/*))
+LIB_FILTERED :=$(addsuffix %, $(addprefix lib, $(LINK_LIBS)))
+#$(eval DEP_LIBS = $(filter $(LIB_FILTERED), $(LIB_ALL)))
+DEP_LIBS := $(filter $(LIB_FILTERED), $(LIB_ALL)) # 和上面用 eval 函数同样的效果
+DEP_LIBS := $(addprefix $(DIR_LIBS)/, $(DEP_LIBS))
 LINK_LIBS := $(addprefix -l, $(LINK_LIBS))
 endif
 
 $(DIRS):
 	$(MKDIR) $@
 
-$(EXE): $(DEP_DIR_EXES) $(OBJS)
-	$(CC) -L $(DIR_LIBS) -o $@ $(filter %.o, $^) $(LINK_LIBS)
+$(EXE): $(DEP_DIR_EXES) $(OBJS) $(DEP_LIBS)
+	$(CC) -L$(DIR_LIBS) -o $@ $(filter %.o, $^) $(LINK_LIBS)
 
-$(LIB): $(DIR_LIBS) $(OBJS)
+$(LIB): $(DEP_DIR_LIBS) $(OBJS)
 	$(AR) $(ARFLAGS) $@ $(filter %.o, $^)
 
 $(DIR_OBJS)/%.o: $(DEP_DIR_OBJS) %.c    # 这里用了模式
